@@ -1,0 +1,143 @@
+import java.util.Scanner;
+import java.util.Random;
+
+class Main {
+  public static void main(String[] args) {
+    // Mode selection
+    String newLine = System.getProperty("line.separator");
+    Scanner inp = new Scanner(System.in);
+    System.out.println(newLine + "Welcome to the guessing game!" + newLine + "Please choose one of the following:" + newLine + "Level 1" + newLine + "Level 2" + newLine + "Level 3" + newLine + "Custom Level");
+    String levelSelect = inp.nextLine();
+    // Allows multiple responses to be accepted and allows each one to pass through a certain place
+    int selection = 0;
+    if ((levelSelect.equalsIgnoreCase("Level 1" )) || (levelSelect.equals("1")) || (levelSelect.equalsIgnoreCase("one"))) {
+      selection = 5;
+    }
+    if ((levelSelect.equalsIgnoreCase("Level 2" )) || (levelSelect.equals("2")) || (levelSelect.equalsIgnoreCase("two"))) {
+      selection = 10;
+    }
+    if ((levelSelect.equalsIgnoreCase("Level 3" )) || (levelSelect.equals("3")) || (levelSelect.equalsIgnoreCase("three"))) {
+      selection = 20;
+    }
+    if ((levelSelect.equalsIgnoreCase("Custom Level")) || (levelSelect.equalsIgnoreCase("custom"))) {
+      selection = 50;
+    }
+    // Error trapping the level selection
+    if (selection == 0) {
+      while (selection == 0) {
+        System.out.print("Please select a valid choice." + newLine);
+        levelSelect = inp.nextLine();
+        if ((levelSelect.equalsIgnoreCase("Level 1" )) || (levelSelect.equals("1")) || (levelSelect.equalsIgnoreCase("one"))) {
+        selection = 5;
+        }
+        if ((levelSelect.equalsIgnoreCase("Level 2" )) || (levelSelect.equals("2")) || (levelSelect.equalsIgnoreCase("two"))) {
+        selection = 10;
+        }
+        if ((levelSelect.equalsIgnoreCase("Level 3" )) || (levelSelect.equals("3")) || (levelSelect.equalsIgnoreCase("three"))) {
+        selection = 20;
+        }
+        if ((levelSelect.equalsIgnoreCase("Custom Level")) || (levelSelect.equalsIgnoreCase("custom"))) {
+        selection = 50;
+        }
+        if (selection > 0) {
+          break;
+        }
+      }
+    }
+    // Defining some variables
+    int randNum = 0;
+    int userGuess = 0;
+    int guessCount = 0;
+    // Starting the core 3 game
+    if ((selection > 0) & (selection != 50)) {
+      System.out.println("Great. You will have 3 guesses to guess a number between" + newLine + "1 " + "and " + selection);
+      randNum = (int)(Math.random() * selection + 1);
+      // Loop of game for 3 guesses
+        System.out.println("Please guess. ");
+        while (guessCount < 2) {
+        // Error trapping the number selection
+        while(!inp.hasNextInt()) {
+          inp.next();
+          System.out.println("Please enter a valid integer. ");
+        }
+        userGuess = inp.nextInt();
+        // Response to number choice
+        if (userGuess == randNum) {
+          System.out.println("Hooray! You guessed correctly!");
+          break;
+        }
+        if (userGuess < randNum) {
+          guessCount++;
+          System.out.println("Your number is too low." + newLine + "Please guess again. ");
+        }
+        if (userGuess > randNum) {
+          guessCount++;
+          System.out.println("Your number is too high." + newLine + "Please guess again. ");
+        }
+        if (guessCount == 2) {
+          System.out.println("Sorry, the correct answer was actually " + randNum + ".");
+        }
+      }
+      }
+    // Definining custom game variables
+    int maxNum;
+    int minNum;
+    int cusGuessCount;
+    // Selection of custom numbers and error trapping non integer numbers
+    if (selection == 50) {
+      System.out.println("What will the maximum number be? ");
+      while(!inp.hasNextInt()) {
+        inp.next();
+        System.out.println("Please enter a valid integer. ");
+      }
+      maxNum = inp.nextInt();
+      System.out.println("What will the minimum number be? ");
+      while(!inp.hasNextInt()) {
+        inp.next();
+        System.out.println("Please enter a valid integer. ");
+      }
+      minNum = inp.nextInt();
+      System.out.println("How many guesses will you have?");
+      while(!inp.hasNextInt()) {
+        inp.next();
+        System.out.println("Please enter a valid integer. ");
+        }
+        cusGuessCount = inp.nextInt();
+      // Starting the custom game and using the correct word if the guess count is 1
+      if (cusGuessCount == 1) {
+      System.out.println("Great. You will have " + cusGuessCount + " guess to guess a number between" + newLine + minNum + " and " +  maxNum);
+      randNum = (int)(Math.random() * maxNum + minNum);
+      }
+      if (cusGuessCount > 1) {
+      System.out.println("Great. You will have " + cusGuessCount + " guesses to guess a number between" + newLine + minNum + " and " +  maxNum);
+      randNum = (int)(Math.random() * maxNum + minNum);
+      }
+      // Loop of custom game
+      while (guessCount < (cusGuessCount - 1)) {
+        // Error trapping the number selection
+        while(!inp.hasNextInt()) {
+        inp.next();
+        System.out.println("Please enter a valid integer. ");
+        }
+        userGuess = inp.nextInt();
+        // Response to number choice
+        if (userGuess == randNum) {
+          System.out.println("Hooray! You guessed correctly!");
+          break;
+        }
+        if (userGuess < randNum) {
+          guessCount++;
+          System.out.println("Your number is too low." + newLine + "Please guess again. ");
+        }
+        if (userGuess > randNum) {
+          guessCount++;
+          System.out.println("Your number is too high." + newLine + "Please guess again. ");
+        }
+        if (guessCount == (cusGuessCount - 1)) {
+          System.out.println("Sorry, the correct answer was actually " + randNum + ".");
+        }
+      }
+    }
+    inp.close();
+  }
+}
